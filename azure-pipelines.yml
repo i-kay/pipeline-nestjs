@@ -29,8 +29,8 @@ jobs:
       pip --version
       pip install awscli --upgrade
       aws --version
-      aws configure set aws_access_key_id $(AWS-ACCESS-KEY-ID)
-      aws configure set aws_secret_access_key $(AWS-SECRET-ACCESS-KEY)
+      aws configure set aws_access_key_id $(AWS-ACCESS-ID)
+      aws configure set aws_secret_access_key $(AWS-ACCESS-KEY)
       aws configure set region us-east-1
     displayName: 'Configure AWS'
   - script: |
