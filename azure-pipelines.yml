@@ -31,7 +31,7 @@ jobs:
   - script: yarn test
     displayName: 'Test'
   - script: yarn sls-deploy
-    displayName:
+    displayName: 'Deploy'
 
 - job: deploy_ecs
   pool: 
