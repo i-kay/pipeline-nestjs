@@ -6,20 +6,24 @@
 trigger:
 - main
 
-pool:
-  name: Default
+jobs:
+- job: deploy-lambda
+  pool: 
+    name: Default
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '12.x'
+    displayName: 'Install Node.js 12'
+  - script: npm install yarn
+    displayName: 'Install Yarn'
+  - script: yarn install
+    displayName: Install dependencies
+  - script: yarn build
+    displayName: 'Build'
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '12.x'
-  displayName: 'Install Node.js'
-
-- script: npm install -g yarn
-  displayName: 'Install Yarn'
-
-- script: yarn install
-  displayName: Install dependencies
-
-- script: yarn build
-  displayName: 'Build build'
+- job: deploy-ecs
+  pool: 
+    name: Default
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
