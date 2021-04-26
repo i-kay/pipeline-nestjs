@@ -12,16 +12,26 @@ jobs:
     name: Default
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
   steps:
+ 
   - task: NodeTool@0
     inputs:
       versionSpec: '12.x'
     displayName: 'Install Node.js 12'
   - script: npm install yarn
     displayName: 'Install Yarn'
-  - script: yarn install
-    displayName: Install dependencies
-  - script: yarn build
+  - script: |
+      aws configure set aws_access_key_id $(AWS-ACCESS-KEY-ID)
+      aws configure set aws_secret_access_key $(AWS-SECRET-ACCESS-KEY)
+      aws configure set region us-east-1
+    displayName: 'Configure AWS'
+  - script: |
+      yarn install
+      yarn build
     displayName: 'Build'
+  - script: yarn test
+    displayName: 'Test'
+  - script: yarn sls-deploy
+    displayName:
 
 - job: deploy_ecs
   pool: 
