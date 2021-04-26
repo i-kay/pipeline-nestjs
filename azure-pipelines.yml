@@ -7,7 +7,7 @@ trigger:
 - main
 
 jobs:
-- job: deploy-lambda
+- job: 'deploy-lambda'
   pool: 
     name: Default
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
@@ -23,7 +23,7 @@ jobs:
   - script: yarn build
     displayName: 'Build'
 
-- job: deploy-ecs
+- job: 'deploy-ecs'
   pool: 
     name: Default
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
