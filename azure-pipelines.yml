@@ -6,6 +6,9 @@
 trigger:
 - main
 
+variables:
+  - group: pipelineNestjs
+
 jobs:
 - job: deploy_lambda
   pool: 
@@ -17,11 +20,12 @@ jobs:
     inputs:
       versionSpec: '12.x'
     displayName: 'Install Node.js 12'
+
   - script: npm install yarn
     displayName: 'Install Yarn'
   - script: |
-      aws configure set aws_access_key_id $(AWS-ACCESS-KEY-ID)
-      aws configure set aws_secret_access_key $(AWS-SECRET-ACCESS-KEY)
+      aws configure set aws_access_key_id $(AWS-ACCESS-ID)
+      aws configure set aws_secret_access_key $(AWS-ACCESS-KEY)
       aws configure set region us-east-1
     displayName: 'Configure AWS'
   - script: |
